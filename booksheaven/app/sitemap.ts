@@ -1,0 +1,3 @@
+import type { MetadataRoute } from "next";
+import { queryBooks } from "@/lib/db";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> { const base="https://booksheaven.com"; const books=await queryBooks(`SELECT slug,updated_at FROM books`); const lists=await queryBooks(`SELECT slug FROM curated_lists WHERE published_at IS NOT NULL`); return [{url:base},{url:`${base}/free-books`},{url:`${base}/free-audiobooks`},...books.map(b=>({url:`${base}/books/${b.slug}`,lastModified:b.updated_at?new Date(String(b.updated_at)):undefined})),...lists.map(l=>({url:`${base}/best/${l.slug}`}))]; }

@@ -1,0 +1,3 @@
+import { getCuratedLists } from "@/lib/db";
+import CuratedListForm from "./form";
+export default async function AdminLists(){const lists=await getCuratedLists();return <div className="container admin"><div className="eyebrow">Editorial CMS</div><h1>Curated lists</h1><div className="two-col"><CuratedListForm/><div className="panel"><h2>Existing lists</h2><div className="list">{lists.map(l=><div className="list-item" key={String(l.id)}><div><strong>{String(l.title)}</strong><div className="muted">/{String(l.slug)}</div></div><span>{l.published_at?"Published":"Draft"}</span></div>)}</div></div></div></div>}
